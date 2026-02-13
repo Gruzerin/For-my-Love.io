@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #ffc0cb;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 10;
+            max-width: 90vw;
+        }
+
+        .gif {
+            display: none;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            margin: 20px auto 30px auto !important;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 90vw;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #e74c3c;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 100px;
+        }
+
+        #yesBtn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background: #27ae60;
+            transform: scale(1.05);
+        }
+
+        #noBtn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .hearts {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .celebration {
+            display: none;
+            font-size: 2em;
+            color: #e74c3c;
+            margin-top: 20px;
+            animation: bounce 0.6s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 30px;
+                margin: 20px;
+            }
+            
+            .gif {
+                width: 200px;
+                height: 200px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNW5rbHNyaGs4a3g5aHZzOTA5NzNibjZrZm5vZ3JkdHJnazMxcXgyYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8e28G54wj0yiJw9rfQ/giphy.gif" alt="Celebration" class="gif" id="celebrationGif">
+        
+        <div class="hearts">💕</div>
+        <h1>You will be my valentine?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+        
+        <div class="celebration" id="celebration">🎉 HEHEHE)) Love babe) 🎉</div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.zIndex = '999';
+            noBtn.style.transform = 'scale(1.1)';
+        }
+
+        function createConfetti() {
+            const colors = ['#e74c3c', '#f39c12', '#9b59b6', '#3498db', '#2ecc71', '#e91e63', '#ff6b6b', '#f8c471'];
+            
+            for (let i = 0; i < 300; i++) { // 
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    const size = Math.random() * 12 + 6;
+                    confetti.style.width = size + 'px';
+                    confetti.style.height = size + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-20px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : Math.random() * 10 + 'px';
+                    confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                    
+                    const duration = Math.random() * 4 + 2;
+                    confetti.style.animation = `fall ${duration}s linear forwards`;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    }, duration * 1000 + 500);
+                }, i * 20);
+            }
+        }
+
+        function celebrate() {
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('h1').innerHTML = 'I love you! 💖💖💖';
+            document.getElementById('celebration').style.display = 'block';
+            document.getElementById('celebrationGif').style.display = 'block';
+            
+            createConfetti();
+            setInterval(createConfetti, 3000); // 
+        }
+    </script>
+</body>
+</html>
